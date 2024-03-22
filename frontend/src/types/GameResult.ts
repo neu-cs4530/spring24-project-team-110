@@ -1,4 +1,4 @@
-import { PlayerID } from '../../types/CoveyTownSocket';
+import { PlayerID } from './CoveyTownSocket';
 
 export default class GameResult {
   private _gameType: string;

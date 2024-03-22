@@ -1,8 +1,8 @@
 import GameHistory from './GameHistory';
-import TicTacToeGame from './TicTacToeGame';
-import ConnectFourGame from './ConnectFourGame';
-import GameResult from './GameResult';
-import Game from './Game';
+import TicTacToeGame from '../../../townService/src/town/games/TicTacToeGame';
+import ConnectFourGame from '../../../townService/src/town/games/ConnectFourGame';
+import GameResult from '../../../townService/src/town/games/GameResult';
+import Game from '../../../townService/src/town/games/Game';
 
 class Helper {
   static gameToGameResult(game: InstanceType<typeof Game>): GameResult {
