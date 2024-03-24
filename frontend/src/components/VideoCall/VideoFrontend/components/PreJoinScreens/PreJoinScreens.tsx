@@ -12,6 +12,7 @@ import { TownJoinResponse } from '../../../../../types/CoveyTownSocket';
 import { testFirebaseStuff } from '../../../../../classes/users/firebaseconfig';
 import SignInInput from '../../../../Login/SignInInput';
 
+
 export enum Steps {
   roomNameStep,
   deviceSelectionStep,
