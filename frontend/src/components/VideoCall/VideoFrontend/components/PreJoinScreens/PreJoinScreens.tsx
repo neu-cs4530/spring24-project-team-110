@@ -11,6 +11,7 @@ import TownSelection from '../../../../Login/TownSelection';
 import { TownJoinResponse } from '../../../../../types/CoveyTownSocket';
 import { testFirebaseStuff } from '../../../../../classes/users/firebaseconfig';
 import SignInInput from '../../../../Login/SignInInput';
+import MyAccountInfo from '../../../../Login/MyAccountInfo';
 
 export enum Steps {
   roomNameStep,
@@ -38,6 +39,7 @@ export default function PreJoinScreens() {
 
 
   return (
+    <>
     <IntroContainer>
       <MediaErrorSnackbar error={mediaError} />
       <Heading as="h2" size="xl">Welcome to Covey.Town!</Heading>
@@ -50,5 +52,9 @@ export default function PreJoinScreens() {
         <SignInInput />
         <TownSelection />
     </IntroContainer>
+    <IntroContainer>
+      <MyAccountInfo />
+    </IntroContainer>
+    </>
   );
 }

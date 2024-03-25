@@ -1,9 +1,10 @@
+import { Timestamp } from 'firebase/firestore';
 import { PlayerID } from '../../types/CoveyTownSocket';
 
 export default class GameResult {
   private _gameType: string;
 
-  private _gameDate: Date;
+  private _gameDate: Timestamp;
 
   private _gamePlayers: PlayerID[];
 
@@ -11,7 +12,7 @@ export default class GameResult {
 
   public constructor(
     gameType: string,
-    gameDate: Date,
+    gameDate: Timestamp,
     gamePlayers: PlayerID[],
     gameWinners: PlayerID,
   ) {
@@ -25,7 +26,7 @@ export default class GameResult {
     return this._gameType;
   }
 
-  get gameDate(): Date {
+  get gameDate(): Timestamp {
     return this._gameDate;
   }
 
