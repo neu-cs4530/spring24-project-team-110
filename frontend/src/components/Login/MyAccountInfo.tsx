@@ -41,6 +41,7 @@ export default function MyAccountInfo() {
             <Avatar name={userInfo.displayName || ''} />
             <Text fontSize='3xl'>{userInfo.displayName}</Text>
           </HStack>
+          <br />
           <Text fontSize='sm'>Email: {userInfo.email}</Text>
           <Text fontSize='sm'>Phone: {'+1 (201) 543 - 9832'}</Text>
           <br />
