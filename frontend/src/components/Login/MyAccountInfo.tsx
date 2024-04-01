@@ -43,7 +43,6 @@ export default function MyAccountInfo() {
           </HStack>
           <br />
           <Text fontSize='sm'>Email: {userInfo.email}</Text>
-          <Text fontSize='sm'>Phone: {'+1 (201) 543 - 9832'}</Text>
           <br />
           <Divider borderWidth='2px' />
           <br />
