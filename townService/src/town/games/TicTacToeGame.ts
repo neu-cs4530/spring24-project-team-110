@@ -15,7 +15,7 @@ import Game from './Game';
  * @see https://en.wikipedia.org/wiki/Tic-tac-toe
  */
 export default class TicTacToeGame extends Game<TicTacToeGameState, TicTacToeMove> {
-  public constructor(testMode = true) {
+  public constructor(testMode = false) {
     super(
       {
         moves: [],
