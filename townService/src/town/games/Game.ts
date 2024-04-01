@@ -7,7 +7,7 @@ import {
   getDocs,
   setDoc,
   updateDoc,
-} from '@firebase/firestore';
+} from 'firebase/firestore';
 import { db } from './firebaseconfig';
 import Player from '../../lib/Player';
 import {
