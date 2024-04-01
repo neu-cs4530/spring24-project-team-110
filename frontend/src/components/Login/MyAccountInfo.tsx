@@ -46,11 +46,21 @@ export default function MyAccountInfo() {
           <br />
           <Divider borderWidth='2px' />
           <br />
-          <GameStats gameHistory={gameHistory} />
-          <br />
-          <Divider borderWidth='2px' />
-          <br />
-          <GameHistoryTable gameHistory={gameHistory} />
+          {gameHistory && (
+            <>
+              <GameStats gameHistory={gameHistory} />
+              <br />
+              <Divider borderWidth='2px' />
+              <br />
+              <GameHistoryTable gameHistory={gameHistory} />
+            </>
+          )}
+          {!gameHistory && (
+            <>
+              <Text>No game history yet.</Text>
+              <br />
+            </>
+          )}
           <Button
             datatype-testid='signin-button'
             onClick={() => signOut(auth)}
