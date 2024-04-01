@@ -15,11 +15,18 @@ import Game from './Game';
  * @see https://en.wikipedia.org/wiki/Tic-tac-toe
  */
 export default class TicTacToeGame extends Game<TicTacToeGameState, TicTacToeMove> {
-  public constructor() {
-    super({
-      moves: [],
-      status: 'WAITING_TO_START',
-    });
+  public constructor(testMode = true) {
+    super(
+      {
+        moves: [],
+        status: 'WAITING_TO_START',
+      },
+      testMode,
+    );
+  }
+
+  public gameType(): string {
+    return 'TicTacToe';
   }
 
   private get _board() {
@@ -111,6 +118,13 @@ export default class TicTacToeGame extends Game<TicTacToeGameState, TicTacToeMov
       moves: [...this.state.moves, move],
     };
     this._checkForGameEnding();
+    if (this.state.status === 'OVER') {
+      if (this._testMode) {
+        this.writeGameResults('test_collection');
+      } else {
+        this.writeGameResults('GameHistory');
+      }
+    }
   }
 
   /*

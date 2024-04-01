@@ -1,6 +1,6 @@
 import { PlayerID } from '../../types/CoveyTownSocket';
 
-export default class GameResult {
+export default class GameResultDB {
   private _gameType: string;
 
   private _gameDate: Date;

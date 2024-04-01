@@ -18,6 +18,10 @@ import * as TicTacToeGameModule from './TicTacToeGame';
 import Game from './Game';
 
 class TestingGame extends Game<TicTacToeGameState, TicTacToeMove> {
+  public gameType(): string {
+    throw new Error('Testing Class');
+  }
+
   public constructor() {
     super({
       moves: [],

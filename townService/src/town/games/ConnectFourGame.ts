@@ -40,14 +40,21 @@ export default class ConnectFourGame extends Game<ConnectFourGameState, ConnectF
    * first player is red, but if either player from the prior game joins the new game
    * (and clicks "start"), the first player will be the other color.
    */
-  public constructor(priorGame?: ConnectFourGame) {
-    super({
-      moves: [],
-      status: 'WAITING_FOR_PLAYERS',
-      firstPlayer: getOtherPlayerColor(priorGame?.state.firstPlayer || 'Yellow'),
-    });
+  public constructor(priorGame?: ConnectFourGame, testMode = true) {
+    super(
+      {
+        moves: [],
+        status: 'WAITING_FOR_PLAYERS',
+        firstPlayer: getOtherPlayerColor(priorGame?.state.firstPlayer || 'Yellow'),
+      },
+      testMode,
+    );
     this._preferredRed = priorGame?.state.red;
     this._preferredYellow = priorGame?.state.yellow;
+  }
+
+  public gameType(): string {
+    return 'Connect Four';
   }
 
   /**
@@ -314,6 +321,13 @@ export default class ConnectFourGame extends Game<ConnectFourGameState, ConnectF
       newState.status = 'OVER';
     }
     this.state = newState;
+    if (this.state.status === 'OVER') {
+      if (this._testMode) {
+        this.writeGameResults('test_collection');
+      } else {
+        this.writeGameResults('GameHistory');
+      }
+    }
   }
 
   /**

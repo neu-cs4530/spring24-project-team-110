@@ -21,6 +21,10 @@ import {
 } from '../../lib/InvalidParametersError';
 
 class TestingGame extends Game<ConnectFourGameState, ConnectFourMove> {
+  public gameType(): string {
+    throw new Error('Testing Game');
+  }
+
   public constructor(priorGame?: ConnectFourGame) {
     super({
       moves: [],

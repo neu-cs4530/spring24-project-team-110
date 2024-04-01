@@ -189,7 +189,11 @@ export function mockPlayer(townID: string): MockedPlayer {
  * Utility function to create a new player object for testing, not connected to any town
  *
  */
-export function createPlayerForTesting(): Player {
+export function createPlayerForTesting(userID?: string): Player {
+  if (userID) {
+    return new Player(`username${nanoid()}`, mock<TownEmitter>(), userID);
+  }
+
   return new Player(`username${nanoid()}`, mock<TownEmitter>());
 }
 
