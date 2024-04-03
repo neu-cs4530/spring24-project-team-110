@@ -24,15 +24,3 @@ const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 export { db, auth };
-
-// TODO remove this eventually
-// logs some stuff to the dev tools console to ensure firebase is working and whatknot
-export async function testFirebaseStuff() {
-  // if projectId is 'persisTown', then you're succesfully connected
-  console.log(firebaseApp.options.projectId);
-  // test reading from the database - should read value 'zachswagmoney'
-  const querySnapshot = await getDocs(collection(db, 'test_collection'));
-  querySnapshot.forEach(doc => {
-    console.log(doc.data());
-  });
-}

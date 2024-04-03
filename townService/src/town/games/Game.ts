@@ -8,7 +8,7 @@ import {
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
-import { db } from './firebaseconfig';
+import db from './firebaseconfig';
 import Player from '../../lib/Player';
 import {
   GameInstance,

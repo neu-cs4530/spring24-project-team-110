@@ -191,10 +191,10 @@ export function mockPlayer(townID: string): MockedPlayer {
  */
 export function createPlayerForTesting(userID?: string): Player {
   if (userID) {
-    return new Player(`username${nanoid()}`, mock<TownEmitter>(), userID);
+    return new Player(`username${nanoid()}`, userID, mock<TownEmitter>());
   }
 
-  return new Player(`username${nanoid()}`, mock<TownEmitter>());
+  return new Player(`username${nanoid()}`, `userID${nanoid()}`, mock<TownEmitter>());
 }
 
 /**

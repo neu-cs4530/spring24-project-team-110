@@ -14,7 +14,6 @@ export default async function getGameHistory(userId: string): Promise<GameResult
   return document
     .data()
     ?.Results.map(
-      (res: DocumentData) =>
-        new GameResult(res.GameType, res.Date, res.GamePlayers, res.GameWinner),
+      (res: DocumentData) => new GameResult(res.GameType, res.Date, res.Players, res.Winner),
     );
 }

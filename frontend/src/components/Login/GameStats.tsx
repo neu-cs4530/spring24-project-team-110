@@ -5,16 +5,16 @@ import { auth } from '../../classes/users/firebaseconfig';
 
 export default function GameStats({ gameHistory }: { gameHistory: GameResult[] }) {
   const connectFourWins = gameHistory.filter(
-    game => game.gameType === 'ConnectFour' && game.gameWinner === auth.currentUser?.uid,
+    game => game.gameType === 'Connect Four' && game.winner === auth.currentUser?.uid,
   ).length;
   const connectFourLosses = gameHistory.filter(
-    game => game.gameType === 'ConnectFour' && game.gameWinner !== auth.currentUser?.uid,
+    game => game.gameType === 'Connect Four' && game.winner !== auth.currentUser?.uid,
   ).length;
   const ticTacToeWins = gameHistory.filter(
-    game => game.gameType === 'TicTacToe' && game.gameWinner === auth.currentUser?.uid,
+    game => game.gameType === 'TicTacToe' && game.winner === auth.currentUser?.uid,
   ).length;
   const ticTacToeLosses = gameHistory.filter(
-    game => game.gameType === 'TicTacToe' && game.gameWinner !== auth.currentUser?.uid,
+    game => game.gameType === 'TicTacToe' && game.winner !== auth.currentUser?.uid,
   ).length;
   return (
     <StatGroup>

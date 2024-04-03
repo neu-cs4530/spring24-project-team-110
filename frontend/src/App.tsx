@@ -98,6 +98,7 @@ function DebugApp(): JSX.Element {
           townsService,
         },
         userName: nanoid(),
+        userID: nanoid(),
       });
       newTownController.connect().then(() => {
         setTownController(newTownController);

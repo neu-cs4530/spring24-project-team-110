@@ -49,6 +49,7 @@ const SOCKET_COMMAND_TIMEOUT_MS = 5000;
 
 export type ConnectionProperties = {
   userName: string;
+  userID: string;
   townID: string;
   loginController: LoginController;
 };
@@ -211,10 +212,11 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
    */
   private _interactableEmitter = new EventEmitter();
 
-  public constructor({ userName, townID, loginController }: ConnectionProperties) {
+  public constructor({ userName, userID, townID, loginController }: ConnectionProperties) {
     super();
     this._townID = townID;
     this._userName = userName;
+    this._userID = userID;
     this._loginController = loginController;
 
     /*
@@ -226,7 +228,8 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
 
     const url = process.env.NEXT_PUBLIC_TOWNS_SERVICE_URL;
     assert(url);
-    this._socket = io(url, { auth: { userName, townID } });
+    console.log(`userID front end: ${userID}`);
+    this._socket = io(url, { auth: { userName, userID, townID } });
     this._townsService = new TownsServiceClient({ BASE: url }).towns;
     this.registerSocketListeners();
   }
