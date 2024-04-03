@@ -204,8 +204,6 @@ export class TownsController extends Controller {
       townID: string;
     };
 
-    console.log(`Recieved user ID! ${userID}`);
-
     const town = this._townsStore.getTownByID(townID);
     if (!town) {
       socket.disconnect(true);
