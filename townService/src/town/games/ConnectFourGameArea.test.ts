@@ -26,11 +26,14 @@ class TestingGame extends Game<ConnectFourGameState, ConnectFourMove> {
   }
 
   public constructor(priorGame?: ConnectFourGame) {
-    super({
-      moves: [],
-      status: 'WAITING_TO_START',
-      firstPlayer: 'Red',
-    });
+    super(
+      {
+        moves: [],
+        status: 'WAITING_TO_START',
+        firstPlayer: 'Red',
+      },
+      true,
+    );
   }
 
   public applyMove(move: GameMove<ConnectFourMove>): void {}

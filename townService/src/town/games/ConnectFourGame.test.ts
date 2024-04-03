@@ -132,7 +132,7 @@ function createMovesFromPattern(
 describe('ConnectFourGame', () => {
   let game: ConnectFourGame;
   beforeEach(() => {
-    game = new ConnectFourGame();
+    game = new ConnectFourGame(undefined, true);
   });
   describe('[T1.1] _join', () => {
     it('should throw an error if the player is already in the game', () => {
@@ -186,7 +186,7 @@ describe('ConnectFourGame', () => {
           expect(game.state.red).toBe(red.id); // First player should be red
           expect(game.state.yellow).toBe(yellow.id); // Second player should be yellow
           // Now, make a new game with the state of the last one
-          const secondGame = new ConnectFourGame(game);
+          const secondGame = new ConnectFourGame(game, true);
           expect(secondGame.state.red).toBeUndefined();
           expect(secondGame.state.yellow).toBeUndefined();
           secondGame.join(yellow);
@@ -261,7 +261,7 @@ describe('ConnectFourGame', () => {
         game.leave(red);
         expect(game.state.status).toBe('OVER');
 
-        const secondGame = new ConnectFourGame(game);
+        const secondGame = new ConnectFourGame(game, true);
         secondGame.join(red);
         expect(secondGame.state.red).toBe(red.id);
         const newYellow = createPlayerForTesting();
@@ -281,7 +281,7 @@ describe('ConnectFourGame', () => {
         game.startGame(yellow);
         game.leave(red);
 
-        const secondGame = new ConnectFourGame(game);
+        const secondGame = new ConnectFourGame(game, true);
         const newRed = createPlayerForTesting();
         secondGame.join(newRed);
         secondGame.join(yellow);
@@ -378,7 +378,7 @@ describe('ConnectFourGame', () => {
           expect(game.state.status).toBe('WAITING_TO_START');
 
           // Now, make a new game with the state of the last one
-          const secondGame = new ConnectFourGame(game);
+          const secondGame = new ConnectFourGame(game, true);
           expect(secondGame.state.red).toBeUndefined();
           expect(secondGame.state.yellow).toBeUndefined();
 
@@ -410,7 +410,7 @@ describe('ConnectFourGame', () => {
           game.join(red);
           game.join(yellow);
           game.leave(red);
-          const secondGame = new ConnectFourGame(game);
+          const secondGame = new ConnectFourGame(game, true);
           secondGame.join(yellow);
           expect(secondGame.state.yellow).toBe(yellow.id);
           expect(secondGame.state.status).toBe('WAITING_FOR_PLAYERS');
@@ -438,7 +438,7 @@ describe('ConnectFourGame', () => {
       });
       test('If there is a prior game, and both players join this one, then the first player is the player who was NOT first in the last game', () => {
         expect(game.state.firstPlayer).toEqual('Red');
-        const game2 = new ConnectFourGame(game);
+        const game2 = new ConnectFourGame(game, true);
         game2.join(red);
         game2.join(yellow);
         game2.startGame(red);
@@ -447,7 +447,7 @@ describe('ConnectFourGame', () => {
       });
       test('If there is a prior game, and only one player joins this one, then that player will be first if they were NOT first in the last game', () => {
         expect(game.state.firstPlayer).toEqual('Red');
-        const game2 = new ConnectFourGame(game);
+        const game2 = new ConnectFourGame(game, true);
         const newPlayer = createPlayerForTesting();
         game2.join(newPlayer);
         game2.join(yellow);
@@ -455,7 +455,7 @@ describe('ConnectFourGame', () => {
         game2.startGame(yellow);
         expect(game2.state.firstPlayer).toEqual('Yellow');
 
-        const game3 = new ConnectFourGame(game2);
+        const game3 = new ConnectFourGame(game2, true);
         const newPlayer2 = createPlayerForTesting();
         game3.join(newPlayer2);
         game3.join(yellow);
@@ -534,7 +534,7 @@ describe('ConnectFourGame', () => {
         expect(game.state.status).toBe('OVER');
         expect(game.state.winner).toBe(red.id);
 
-        const secondGame = new ConnectFourGame(game);
+        const secondGame = new ConnectFourGame(game, true);
         secondGame.join(red);
         secondGame.join(yellow);
         secondGame.startGame(red);
@@ -557,7 +557,7 @@ describe('ConnectFourGame', () => {
          * create this pattern:
          * W W W W L L L
          */
-        const thirdGame = new ConnectFourGame(secondGame);
+        const thirdGame = new ConnectFourGame(secondGame, true);
         thirdGame.join(red);
         thirdGame.join(yellow);
         thirdGame.startGame(red);
@@ -603,7 +603,7 @@ describe('ConnectFourGame', () => {
         expect(game.state.status).toBe('OVER');
         expect(game.state.winner).toBe(red.id);
         // In the last column
-        const secondGame = new ConnectFourGame(game);
+        const secondGame = new ConnectFourGame(game, true);
         secondGame.join(red);
         secondGame.join(yellow);
         secondGame.startGame(red);
@@ -821,7 +821,7 @@ describe('ConnectFourGame', () => {
           ).toThrowError(MOVE_NOT_YOUR_TURN_MESSAGE);
 
           // Test with Yellow as first player
-          const secondGame = new ConnectFourGame(game);
+          const secondGame = new ConnectFourGame(game, true);
           secondGame.join(red);
           secondGame.join(yellow);
           secondGame.startGame(yellow);
