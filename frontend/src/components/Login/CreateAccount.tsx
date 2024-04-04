@@ -62,9 +62,9 @@ export default function CreateAccount() {
     setIsCreating(false);
   }
 
-  function createAcc() {
+  async function createAcc() {
     setIsCreating(true);
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         // we should redirect them/rerender to somewhere useful (like the join town page) once we have that
         const user = userCredential.user;
