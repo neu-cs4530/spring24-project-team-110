@@ -141,7 +141,7 @@ export default abstract class Game<StateType extends WinnableGameState, MoveType
       Date: this.date,
       GameType: this.gameType(),
       Winner: this.winner,
-      Players: this.players,
+      Players: this._players.map(player => player.userName),
     };
 
     try {
