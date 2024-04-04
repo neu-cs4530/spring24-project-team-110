@@ -12,13 +12,12 @@ import React, { useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   User,
-  // connectAuthEmulator,
   updateProfile,
+  sendSignInLinkToEmail,
 } from 'firebase/auth';
 import { auth } from '../../classes/users/firebaseconfig';
 
 export default function CreateAccount() {
-  // connectAuthEmulator(auth, 'http://localhost:9099');
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,6 +30,38 @@ export default function CreateAccount() {
     return error.message.substring(firebaseLength, error.message.length - 1);
   }
 
+  const actionCodeSettings = {
+    // this is only for testing, ideally we'll want to go to the landing page
+    url: 'http://localhost:3000/', // https://persistentown.onrender.com/
+    handleCodeInApp: true,
+  };
+
+  function verifyUserEmail() {
+    setIsCreating(true);
+    sendSignInLinkToEmail(auth, email, actionCodeSettings)
+      .then(() => {
+        // Save the email locally so you don't need to ask the user for it again
+        window.localStorage.setItem('emailForSignIn', email);
+        toast({
+          title: 'Email link sent',
+          description: 'Check your email for a sign-in link.',
+          status: 'success',
+          duration: 9000,
+          isClosable: false,
+        });
+      })
+      .catch(error => {
+        toast({
+          title: 'Error sending link to email',
+          description: extractErrorMsg(error),
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+    setIsCreating(false);
+  }
+
   function createAcc() {
     setIsCreating(true);
     createUserWithEmailAndPassword(auth, email, password)
@@ -39,6 +70,7 @@ export default function CreateAccount() {
         const user = userCredential.user;
         updateProfile(user, { displayName: displayName });
         setLoggedInUser(user);
+        verifyUserEmail();
         console.log(user);
       })
       .catch((error: Error) => {
