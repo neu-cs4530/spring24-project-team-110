@@ -6,12 +6,13 @@ import RoomNameScreen from './RoomNameScreen/RoomNameScreen';
 import { useAppState } from '../../state';
 import { useParams } from 'react-router-dom';
 import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
-import { Heading, Text, Button } from '@chakra-ui/react';
+import { Button, Heading, Text } from '@chakra-ui/react';
 import TownSelection from '../../../../Login/TownSelection';
 import { TownJoinResponse } from '../../../../../types/CoveyTownSocket';
-import { testFirebaseStuff } from '../../../../../classes/users/firebaseconfig';
+import { auth, testFirebaseStuff } from '../../../../../classes/users/firebaseconfig';
 import CreateAccount from '../../../../Login/CreateAccount';
 import SignInInput from '../../../../Login/SignInInput';
+import { User, onAuthStateChanged } from 'firebase/auth';
 import MyAccountInfo from '../../../../Login/MyAccountInfo';
 
 export enum Steps {
@@ -24,6 +25,7 @@ testFirebaseStuff();
 
 export default function PreJoinScreens() {
   const { user } = useAppState();
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const { getAudioAndVideoTracks } = useVideoContext();
 
   const [mediaError, setMediaError] = useState<Error>();
@@ -37,7 +39,21 @@ export default function PreJoinScreens() {
       });
     }
   }, [getAudioAndVideoTracks, mediaError]);
+  
+  onAuthStateChanged(auth, fbuser => {
+    if (fbuser) {
+      setUserInfo(fbuser);
+    } else {
+      setUserInfo(null);
+    }
+  });
 
+
+  const attemptSignout = async () => {
+    auth.signOut().then(() => {
+      console.log('Signed out');
+    });
+  };
 
   return (
     <>
@@ -49,10 +65,23 @@ export default function PreJoinScreens() {
         To get started, setup your camera and microphone, choose a username, and then create a new town
         to hang out in, or join an existing one.
       </Text>
-        <DeviceSelectionScreen />
-        <CreateAccount />
+      {userInfo === null ? 
+        (<>
+        <Text p="4">
+          Please log in or register to continue
+        </Text>
         <SignInInput />
-        <TownSelection />
+        <CreateAccount />
+        </>) : 
+        <><DeviceSelectionScreen />
+        <TownSelection /> 
+        <Button
+            datatype-testid='signout-button'
+            onClick={attemptSignout}
+            >
+            Sign Out
+          </Button>
+        </>}
     </IntroContainer>
     <IntroContainer>
       <MyAccountInfo />

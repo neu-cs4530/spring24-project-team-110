@@ -40,7 +40,7 @@ export default class ConnectFourGame extends Game<ConnectFourGameState, ConnectF
    * first player is red, but if either player from the prior game joins the new game
    * (and clicks "start"), the first player will be the other color.
    */
-  public constructor(priorGame?: ConnectFourGame, testMode = true) {
+  public constructor(priorGame?: ConnectFourGame, testMode = false) {
     super(
       {
         moves: [],

@@ -4,7 +4,7 @@ import ConnectFourGame from './ConnectFourGame';
 
 describe('Game', () => {
   it('should write to Firestore with never-seen-before players', async () => {
-    const game = new TicTacToeGame();
+    const game = new TicTacToeGame(true);
     const p1 = createPlayerForTesting();
     const p2 = createPlayerForTesting();
 
@@ -17,7 +17,7 @@ describe('Game', () => {
   });
 
   it('should write to Firestore with previously-seen players', async () => {
-    const game1 = new TicTacToeGame();
+    const game1 = new TicTacToeGame(true);
     const p1 = createPlayerForTesting('a');
     const p2 = createPlayerForTesting('b');
 
@@ -26,7 +26,7 @@ describe('Game', () => {
 
     await game1.writeGameResults('test_collection');
 
-    const game2 = new TicTacToeGame();
+    const game2 = new TicTacToeGame(true);
 
     game2.join(p1);
     game2.join(p2);
@@ -38,7 +38,7 @@ describe('Game', () => {
   });
 
   it('should fail to write to Firestore', async () => {
-    const game = new ConnectFourGame();
+    const game = new ConnectFourGame(undefined, true);
     const p1 = createPlayerForTesting();
     const p2 = createPlayerForTesting();
 

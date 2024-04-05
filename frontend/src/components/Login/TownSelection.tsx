@@ -24,9 +24,14 @@ import { Town } from '../../generated/client';
 import useLoginController from '../../hooks/useLoginController';
 import TownController from '../../classes/TownController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
+import { auth } from '../../classes/users/firebaseconfig';
+import { User, onAuthStateChanged } from 'firebase/auth';
 
 export default function TownSelection(): JSX.Element {
-  const [userName, setUserName] = useState<string>('');
+  const [userInfo, setUserInfo] = useState<User | null>(null);
+  const [userName, setUserName] = useState<string>(
+    auth.currentUser?.displayName || auth.currentUser?.email || '',
+  );
   const [newTownName, setNewTownName] = useState<string>('');
   const [newTownIsPublic, setNewTownIsPublic] = useState<boolean>(true);
   const [townIDToJoin, setTownIDToJoin] = useState<string>('');
@@ -38,6 +43,13 @@ export default function TownSelection(): JSX.Element {
 
   const toast = useToast();
 
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      setUserName(user.displayName || user.email || '');
+    } else {
+      setUserName('');
+    }
+  });
   const updateTownListings = useCallback(() => {
     townsService.listTowns().then(towns => {
       setCurrentPublicTowns(towns.sort((a, b) => b.currentOccupancy - a.currentOccupancy));
@@ -251,6 +263,7 @@ export default function TownSelection(): JSX.Element {
                 placeholder='Your name'
                 value={userName}
                 onChange={event => setUserName(event.target.value)}
+                disabled={true}
               />
             </FormControl>
           </Box>

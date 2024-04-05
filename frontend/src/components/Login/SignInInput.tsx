@@ -1,19 +1,19 @@
-import { Button, Heading, Input } from '@chakra-ui/react';
 import {
   isSignInWithEmailLink,
   signInWithEmailAndPassword,
   signInWithEmailLink,
 } from 'firebase/auth';
+import { Box, Button, Heading, Input } from '@chakra-ui/react';
 import { auth } from '../../classes/users/firebaseconfig';
 import React, { useState } from 'react';
 
 export default function SignInInput() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(auth.currentUser !== null);
   const [signingIn, setSigningIn] = useState(false);
 
-  function attemptLogin() {
+  const attemptLogin = async () => {
     setSigningIn(true);
     if (isSignInWithEmailLink(auth, window.location.href)) {
       // get the email if available (is on same device)
@@ -38,6 +38,7 @@ export default function SignInInput() {
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
+        console.log(auth.currentUser?.email);
         setIsSignedIn(true);
       })
       .catch(error => {
@@ -46,29 +47,34 @@ export default function SignInInput() {
         console.log(errorCode, errorMessage);
       });
     setSigningIn(false);
-  }
+  };
 
-  // absolutely horrendous signin form - will polish once it has a more permanent home ie. not in the town selection screen
   return (
     <>
       {isSignedIn ? (
         <h1>Welcome back!</h1>
       ) : (
         <>
-          <Heading>Sign In</Heading>
-          <Input type='text' placeholder='email' onChange={event => setEmail(event.target.value)} />
-          <Input
-            type='password'
-            placeholder='password'
-            onChange={event => setPassword(event.target.value)}
-          />
-          <Button
-            datatype-testid='signin-button'
-            onClick={() => attemptLogin()}
-            isLoading={signingIn}
-            disabled={signingIn || isSignedIn}>
-            Sign In
-          </Button>
+          <Box p='4' borderWidth='1px' borderRadius='lg'>
+            <Heading>Sign In</Heading>
+            <Input
+              type='text'
+              placeholder='email'
+              onChange={event => setEmail(event.target.value)}
+            />
+            <Input
+              type='password'
+              placeholder='password'
+              onChange={event => setPassword(event.target.value)}
+            />
+            <Button
+              datatype-testid='signin-button'
+              onClick={attemptLogin}
+              isLoading={signingIn}
+              disabled={signingIn || isSignedIn}>
+              Sign In
+            </Button>
+          </Box>
         </>
       )}
     </>
