@@ -4,7 +4,6 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react'
 import { auth } from '../../classes/users/firebaseconfig';
 
 export default function GameHistoryTable({ gameHistory }: { gameHistory: GameResult[] }) {
-  console.log(gameHistory);
   return (
     <Table variant='simple'>
       <TableCaption>Game History</TableCaption>
@@ -19,12 +18,14 @@ export default function GameHistoryTable({ gameHistory }: { gameHistory: GameRes
       <Tbody>
         {gameHistory.map((gameResult, index) => (
           <Tr key={index}>
-            <Td>{gameResult.gameDate.toDate().toDateString()}</Td>
+            <Td>{gameResult.date.toDate().toDateString()}</Td>
             <Td>{gameResult.gameType}</Td>
-            <Td textColor={gameResult.gameWinner === auth.currentUser?.uid ? 'green' : 'red'}>
-              {gameResult.gameWinner === auth.currentUser?.uid ? 'Win' : 'Lose'}
+            <Td textColor={gameResult.winner === auth.currentUser?.uid ? 'green' : 'red'}>
+              {gameResult.winner === auth.currentUser?.uid ? 'Win' : 'Lose'}
             </Td>
-            <Td>{gameResult.gamePlayers.filter(id => id !== auth.currentUser?.uid)[0]}</Td>
+            <Td>
+              {gameResult.players.find(userName => userName !== auth.currentUser?.displayName)}
+            </Td>
           </Tr>
         ))}
       </Tbody>

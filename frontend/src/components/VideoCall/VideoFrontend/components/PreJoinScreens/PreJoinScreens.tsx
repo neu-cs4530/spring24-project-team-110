@@ -9,7 +9,7 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import { Button, Heading, Text } from '@chakra-ui/react';
 import TownSelection from '../../../../Login/TownSelection';
 import { TownJoinResponse } from '../../../../../types/CoveyTownSocket';
-import { auth, testFirebaseStuff } from '../../../../../classes/users/firebaseconfig';
+import { auth } from '../../../../../classes/users/firebaseconfig';
 import CreateAccount from '../../../../Login/CreateAccount';
 import SignInInput from '../../../../Login/SignInInput';
 import { User, onAuthStateChanged } from 'firebase/auth';
@@ -19,9 +19,6 @@ export enum Steps {
   roomNameStep,
   deviceSelectionStep,
 }
-
-// TODO: remove this eventually
-testFirebaseStuff();
 
 export default function PreJoinScreens() {
   const { user } = useAppState();

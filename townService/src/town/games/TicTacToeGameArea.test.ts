@@ -23,10 +23,13 @@ class TestingGame extends Game<TicTacToeGameState, TicTacToeMove> {
   }
 
   public constructor() {
-    super({
-      moves: [],
-      status: 'WAITING_TO_START',
-    });
+    super(
+      {
+        moves: [],
+        status: 'WAITING_TO_START',
+      },
+      true,
+    );
   }
 
   public applyMove(): void {}

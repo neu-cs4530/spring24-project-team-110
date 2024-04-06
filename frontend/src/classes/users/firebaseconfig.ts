@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,15 +24,3 @@ const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 export { db, auth };
-
-// TODO remove this eventually
-// logs some stuff to the dev tools console to ensure firebase is working and whatknot
-export async function testFirebaseStuff() {
-  // if projectId is 'persisTown', then you're succesfully connected
-  console.log(firebaseApp.options.projectId);
-  // test reading from the database - should read value 'zachswagmoney'
-  const querySnapshot = await getDocs(collection(db, 'test_collection'));
-  querySnapshot.forEach(doc => {
-    console.log(doc.data());
-  });
-}

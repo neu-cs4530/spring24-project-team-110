@@ -4,37 +4,32 @@ import { PlayerID } from '../../types/CoveyTownSocket';
 export default class GameResult {
   private _gameType: string;
 
-  private _gameDate: Timestamp;
+  private _date: Timestamp;
 
-  private _gamePlayers: PlayerID[];
+  private _players: PlayerID[];
 
-  private _gameWinner: PlayerID;
+  private _winner: PlayerID;
 
-  public constructor(
-    gameType: string,
-    gameDate: Timestamp,
-    gamePlayers: PlayerID[],
-    gameWinners: PlayerID,
-  ) {
+  public constructor(gameType: string, date: Timestamp, players: PlayerID[], winner: PlayerID) {
     this._gameType = gameType;
-    this._gameDate = gameDate;
-    this._gamePlayers = gamePlayers;
-    this._gameWinner = gameWinners;
+    this._date = date;
+    this._players = players;
+    this._winner = winner;
   }
 
   get gameType(): string {
     return this._gameType;
   }
 
-  get gameDate(): Timestamp {
-    return this._gameDate;
+  get date(): Timestamp {
+    return this._date;
   }
 
-  get gamePlayers(): PlayerID[] {
-    return this._gamePlayers;
+  get players(): PlayerID[] {
+    return this._players;
   }
 
-  get gameWinner(): PlayerID {
-    return this._gameWinner;
+  get winner(): PlayerID {
+    return this._winner;
   }
 }

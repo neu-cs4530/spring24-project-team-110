@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 import assert from 'assert';
 import {
   Box,
@@ -108,8 +109,10 @@ export default function TownSelection(): JSX.Element {
           }
         }, 1000);
         setIsJoining(true);
+        const userID = auth.currentUser?.uid || nanoid();
         const newController = new TownController({
           userName,
+          userID,
           townID: coveyRoomID,
           loginController,
         });
