@@ -30,6 +30,13 @@ export default function CreateAccount() {
     return error.message.substring(firebaseLength, error.message.length - 1);
   }
 
+  function resetForm() {
+    setIsCreating(false);
+    setDisplayName('');
+    setEmail('');
+    setPassword('');
+  }
+
   const actionCodeSettings = {
     // this is only for testing, ideally we'll want to go to the landing page
     url: 'http://localhost:3000/', // https://persistentown.onrender.com/
@@ -55,6 +62,7 @@ export default function CreateAccount() {
             });
           })
           .catch(error => {
+            resetForm();
             toast({
               title: 'Error sending link to email',
               description: extractErrorMsg(error),
@@ -69,6 +77,7 @@ export default function CreateAccount() {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        resetForm();
         toast({
           title: 'Error creating account',
           description: extractErrorMsg(error),
