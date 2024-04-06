@@ -36,41 +36,33 @@ export default function CreateAccount() {
     handleCodeInApp: true,
   };
 
-  function verifyUserEmail() {
-    setIsCreating(true);
-    sendSignInLinkToEmail(auth, email, actionCodeSettings)
-      .then(() => {
-        // Save the email locally so you don't need to ask the user for it again
-        window.localStorage.setItem('emailForSignIn', email);
-        toast({
-          title: 'Email link sent',
-          description: 'Check your email for a sign-in link.',
-          status: 'success',
-          duration: 9000,
-          isClosable: false,
-        });
-      })
-      .catch(error => {
-        toast({
-          title: 'Error sending link to email',
-          description: extractErrorMsg(error),
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-      });
-    setIsCreating(false);
-  }
-
   async function createAcc() {
     setIsCreating(true);
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        // we should redirect them/rerender to somewhere useful (like the join town page) once we have that
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async userCredential => {
         const user = userCredential.user;
-        updateProfile(user, { displayName: displayName });
-        setLoggedInUser(user);
-        verifyUserEmail();
+        await updateProfile(user, { displayName: displayName });
+        sendSignInLinkToEmail(auth, email, actionCodeSettings)
+          .then(() => {
+            // save the email locally so we don't need to ask for it again
+            window.localStorage.setItem('emailForSignIn', email);
+            toast({
+              title: 'Email link sent',
+              description: 'Check your email for a sign-in link.',
+              status: 'success',
+              duration: 9000,
+              isClosable: false,
+            });
+          })
+          .catch(error => {
+            toast({
+              title: 'Error sending link to email',
+              description: extractErrorMsg(error),
+              status: 'error',
+              duration: 9000,
+              isClosable: true,
+            });
+          });
         console.log(user);
       })
       .catch((error: Error) => {
@@ -85,57 +77,58 @@ export default function CreateAccount() {
           isClosable: true,
         });
       });
-
-    setIsCreating(false);
   }
 
   return (
-    <Box mb='2' p='4' borderWidth='1px' borderRadius='lg'>
-      {(!loggedInUser && (
-        <>
-          <Heading>Create Account</Heading>
-          <FormControl>
-            <FormLabel htmlFor='displayName'>Display Name</FormLabel>
-            <Input
-              autoFocus
-              name='displayName'
-              placeholder='Display name'
-              value={displayName}
-              onChange={event => setDisplayName(event.target.value)}
-            />
-            <FormLabel htmlFor='email'>Email</FormLabel>
-            <Input
-              autoFocus
-              name='email'
-              placeholder='Your email'
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-            />
-            <FormLabel htmlFor='password'>Password</FormLabel>
-            <Input
-              autoFocus
-              name='password'
-              placeholder='Password'
-              value={password}
-              type='password'
-              onChange={event => setPassword(event.target.value)}
-            />
-          </FormControl>
-          <Button
-            data-testid='joinTownByIDButton'
-            onClick={() => createAcc()}
-            isLoading={isCreating}
-            disabled={isCreating}>
-            Connect
-          </Button>
-        </>
-      )) || (
-        <Box p='4' borderWidth='1px' borderRadius='lg'>
-          <Text>
-            Logged in with email {loggedInUser?.email} UID: {loggedInUser?.uid}
-          </Text>
-        </Box>
-      )}
-    </Box>
+    <form>
+      <Box mb='2' p='4' borderWidth='1px' borderRadius='lg'>
+        {(!loggedInUser && (
+          <>
+            <Heading>Create Account</Heading>
+            <FormControl>
+              <FormLabel htmlFor='displayName'>Display Name</FormLabel>
+              <Input
+                autoFocus
+                type='email'
+                name='displayName'
+                placeholder='Display name'
+                value={displayName}
+                onChange={event => setDisplayName(event.target.value)}
+              />
+              <FormLabel htmlFor='email'>Email</FormLabel>
+              <Input
+                autoFocus
+                name='email'
+                placeholder='Your email'
+                value={email}
+                onChange={event => setEmail(event.target.value)}
+              />
+              <FormLabel htmlFor='password'>Password</FormLabel>
+              <Input
+                autoFocus
+                name='password'
+                placeholder='Password'
+                value={password}
+                type='password'
+                onChange={event => setPassword(event.target.value)}
+              />
+            </FormControl>
+            <Button
+              data-testid='joinTownByIDButton'
+              onClick={() => createAcc()}
+              isLoading={isCreating}
+              disabled={isCreating}>
+              Create Account
+            </Button>
+          </>
+        )) || (
+          <Box p='4' borderWidth='1px' borderRadius='lg'>
+            <Text>
+              Logged in with email {loggedInUser?.email} UID: {loggedInUser?.uid}
+            </Text>
+          </Box>
+        )}
+      </Box>
+    </form>
   );
 }

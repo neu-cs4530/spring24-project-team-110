@@ -22,10 +22,8 @@ export default function SignInInput() {
         // user opened the link on a different device, get it now
         emailForSignIn = window.prompt('Please provide your email for confirmation');
       }
-      // client SDK will parse the code from the link
-      signInWithEmailLink(auth, email, window.location.href)
+      await signInWithEmailLink(auth, email, window.location.href)
         .then(result => {
-          // clear email from storage
           window.localStorage.removeItem('emailForSignIn');
           console.log(result);
           setIsSignedIn(true);
@@ -33,20 +31,19 @@ export default function SignInInput() {
         .catch(error => {
           console.log(error);
         });
+    } else {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          console.log(auth.currentUser?.email);
+          console.log(auth.currentUser?.emailVerified);
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
     }
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        console.log(auth.currentUser?.email);
-        setIsSignedIn(true);
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-    setSigningIn(false);
+    console.log(auth.currentUser?.emailVerified);
   };
 
   return (
