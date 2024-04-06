@@ -341,6 +341,7 @@ describe('Town Selection', () => {
           await waitFor(() =>
             expect(coveyTownControllerConstructorSpy).toBeCalledWith({
               userName,
+              userID: '',
               townID: coveyTownID,
               loginController: mockLoginController,
             }),
@@ -430,6 +431,7 @@ describe('Town Selection', () => {
                 await waitFor(() =>
                   expect(coveyTownControllerConstructorSpy).toBeCalledWith({
                     userName: username,
+                    userID: '',
                     townID: town.townID,
                     loginController: mockLoginController,
                   }),
@@ -625,6 +627,7 @@ describe('Town Selection', () => {
               expect(coveyTownControllerConstructorSpy).toBeCalledWith({
                 userName,
                 townID: townID,
+                userID: '',
                 loginController: mockLoginController,
               }),
             );
