@@ -3,6 +3,29 @@ import GameResult from '../../classes/users/GameResult';
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
 import { auth } from '../../classes/users/firebaseconfig';
 
+const getResultColor = (winner: string) => {
+  if (winner === auth.currentUser?.uid) {
+    // win
+    return 'green';
+  }
+  if (!winner) {
+    // tie
+    return '#b89707';
+  }
+  // loss
+  return 'red';
+};
+
+const getResultText = (winner: string) => {
+  if (winner === auth.currentUser?.uid) {
+    return 'Win';
+  }
+  if (!winner) {
+    return 'Tie';
+  }
+  return 'Lose';
+};
+
 export default function GameHistoryTable({ gameHistory }: { gameHistory: GameResult[] }) {
   return (
     <Table variant='simple'>
@@ -20,8 +43,8 @@ export default function GameHistoryTable({ gameHistory }: { gameHistory: GameRes
           <Tr key={index}>
             <Td>{gameResult.date.toDate().toDateString()}</Td>
             <Td>{gameResult.gameType}</Td>
-            <Td textColor={gameResult.winner === auth.currentUser?.uid ? 'green' : 'red'}>
-              {gameResult.winner === auth.currentUser?.uid ? 'Win' : 'Lose'}
+            <Td textColor={getResultColor(gameResult.winner)}>
+              {getResultText(gameResult.winner)}
             </Td>
             <Td>
               {gameResult.players.find(userName => userName !== auth.currentUser?.displayName)}
