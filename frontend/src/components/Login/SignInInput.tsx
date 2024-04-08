@@ -28,7 +28,6 @@ export default function SignInInput() {
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
-        console.log(auth.currentUser?.email);
         setIsSignedIn(true);
       })
       .catch(error => {

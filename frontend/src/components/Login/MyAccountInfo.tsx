@@ -13,14 +13,15 @@ export default function MyAccountInfo() {
   const [gameHistory, setGameHistory] = useState<GameResult[]>([]);
 
   const getHistory = async (userId: string) => {
+    console.log('reading...');
     setGameHistory(await getGameHistory(userId));
   };
 
   useEffect(() => {
-    if (isSignedIn && userInfo) {
+    if (userInfo) {
       getHistory(userInfo.uid);
     }
-  }, [isSignedIn, userInfo]);
+  }, [userInfo]);
 
   onAuthStateChanged(auth, user => {
     if (user) {
