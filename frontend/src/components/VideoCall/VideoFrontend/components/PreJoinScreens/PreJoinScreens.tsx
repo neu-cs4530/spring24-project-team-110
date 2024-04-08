@@ -80,9 +80,11 @@ export default function PreJoinScreens() {
           </Button>
         </>}
     </IntroContainer>
+    {( userInfo?.emailVerified && 
     <IntroContainer>
       <MyAccountInfo />
     </IntroContainer>
+    )}
     </>
   );
 }

@@ -1,5 +1,9 @@
+import {
+  isSignInWithEmailLink,
+  signInWithEmailAndPassword,
+  signInWithEmailLink,
+} from 'firebase/auth';
 import { Box, Button, Heading, Input } from '@chakra-ui/react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../classes/users/firebaseconfig';
 import React, { useState } from 'react';
 
@@ -11,18 +15,35 @@ export default function SignInInput() {
 
   const attemptLogin = async () => {
     setSigningIn(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        console.log(auth.currentUser?.email);
-        setIsSignedIn(true);
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
-    setSigningIn(false);
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      // get the email if available (is on same device)
+      let emailForSignIn = window.localStorage.getItem('emailForSignIn');
+      if (!emailForSignIn) {
+        // user opened the link on a different device, get it now
+        emailForSignIn = window.prompt('Please provide your email for confirmation');
+      }
+      await signInWithEmailLink(auth, email, window.location.href)
+        .then(result => {
+          window.localStorage.removeItem('emailForSignIn');
+          console.log(result);
+          setIsSignedIn(true);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          console.log(auth.currentUser?.email);
+          console.log(auth.currentUser?.emailVerified);
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    }
+    console.log(auth.currentUser?.emailVerified);
   };
 
   return (
