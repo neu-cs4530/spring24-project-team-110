@@ -228,7 +228,6 @@ export default class TownController extends (EventEmitter as new () => TypedEmit
 
     const url = process.env.NEXT_PUBLIC_TOWNS_SERVICE_URL;
     assert(url);
-    console.log(`userID front end: ${userID}`);
     this._socket = io(url, { auth: { userName, userID, townID } });
     this._townsService = new TownsServiceClient({ BASE: url }).towns;
     this.registerSocketListeners();

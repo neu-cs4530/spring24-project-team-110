@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { nanoid } from 'nanoid';
 import assert from 'assert';
 import {
   Box,
@@ -26,15 +25,9 @@ import useLoginController from '../../hooks/useLoginController';
 import TownController from '../../classes/TownController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
 import { auth } from '../../classes/users/firebaseconfig';
-import { User, onAuthStateChanged } from 'firebase/auth';
 
 export default function TownSelection(): JSX.Element {
-  const [userName, setUserName] = useState<string>(
-    auth.currentUser?.displayName || auth.currentUser?.email || '',
-  );
-  // this is set to true for now so that we can test
-  // in localhost we don't get an accurate email verification
-  const [emailVerified, setEmailVerified] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string>(auth.currentUser?.displayName || '');
   const [newTownName, setNewTownName] = useState<string>('');
   const [newTownIsPublic, setNewTownIsPublic] = useState<boolean>(true);
   const [townIDToJoin, setTownIDToJoin] = useState<string>('');
@@ -46,12 +39,6 @@ export default function TownSelection(): JSX.Element {
 
   const toast = useToast();
 
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      setUserName(user.displayName || user.email || '');
-      setEmailVerified(user.emailVerified);
-    }
-  });
   const updateTownListings = useCallback(() => {
     townsService.listTowns().then(towns => {
       setCurrentPublicTowns(towns.sort((a, b) => b.currentOccupancy - a.currentOccupancy));
@@ -109,10 +96,9 @@ export default function TownSelection(): JSX.Element {
           }
         }, 1000);
         setIsJoining(true);
-        const userID = auth.currentUser?.uid || nanoid();
         const newController = new TownController({
           userName,
-          userID,
+          userID: auth.currentUser?.uid || '',
           townID: coveyRoomID,
           loginController,
         });

@@ -165,11 +165,7 @@ export default abstract class Game<StateType extends WinnableGameState, MoveType
 
     const userIDs = this.players;
 
-    // eslint-disable-next-line guard-for-in
-    for (const userID of userIDs) {
-      // eslint-disable-next-line no-await-in-loop
-      codes.add(await this._writeGameResult(colName, userID));
-    }
+    userIDs.forEach(async userID => {await this._writeGameResult(colName, userID)});
 
     if (codes.has(1)) {
       return 1;
