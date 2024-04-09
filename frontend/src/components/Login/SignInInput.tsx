@@ -1,5 +1,5 @@
-import { Box, Button, Heading, Input, useToast } from '@chakra-ui/react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Box, Button, Heading, Input, useToast, HStack } from '@chakra-ui/react';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../classes/users/firebaseconfig';
 import React, { useState } from 'react';
 
@@ -26,14 +26,10 @@ export default function SignInInput() {
   const attemptLogin = async () => {
     setSigningIn(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
+      .then(() => {
         setIsSignedIn(true);
       })
       .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
         toast({
           title: 'Error signing in',
           description: signingErrorToString(error),
@@ -43,6 +39,30 @@ export default function SignInInput() {
         });
       });
     setSigningIn(false);
+  };
+
+  const attempSendPasswordReset = async () => {
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        toast({
+          title: 'Password reset email sent',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      })
+      .catch((error: Error) => {
+        const errorMessage = error.message.includes('missing-email')
+          ? 'Please fill in your email for a password reset email to be sent.'
+          : signingErrorToString(error);
+        toast({
+          title: 'Error sending password reset email',
+          description: errorMessage,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   };
 
   return (
@@ -63,13 +83,18 @@ export default function SignInInput() {
               placeholder='password'
               onChange={event => setPassword(event.target.value)}
             />
-            <Button
-              datatype-testid='signin-button'
-              onClick={attemptLogin}
-              isLoading={signingIn}
-              disabled={signingIn || isSignedIn}>
-              Sign In
-            </Button>
+            <HStack spacing={4}>
+              <Button
+                datatype-testid='signin-button'
+                onClick={attemptLogin}
+                isLoading={signingIn}
+                disabled={signingIn || isSignedIn}>
+                Sign In
+              </Button>
+              <Button datatype-testid='signin-button' onClick={attempSendPasswordReset}>
+                Forgot Password?
+              </Button>
+            </HStack>
           </Box>
         </>
       )}
