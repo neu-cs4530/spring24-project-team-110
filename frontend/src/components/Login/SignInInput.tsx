@@ -91,7 +91,7 @@ export default function SignInInput() {
                 disabled={signingIn || isSignedIn}>
                 Sign In
               </Button>
-              <Button datatype-testid='signin-button' onClick={attempSendPasswordReset}>
+              <Button datatype-testid='pass-reset-button' onClick={attempSendPasswordReset}>
                 Forgot Password?
               </Button>
             </HStack>
