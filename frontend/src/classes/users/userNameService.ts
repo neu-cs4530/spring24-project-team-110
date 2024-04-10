@@ -1,5 +1,5 @@
 import { getDoc, doc, DocumentSnapshot, setDoc } from 'firebase/firestore';
-import { db } from './firebaseconfig';
+import { db } from '../../../firebaseconfig';
 
 const COLLECTION = 'Usernames';
 

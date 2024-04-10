@@ -1,5 +1,5 @@
 {
- "include": ["src/**/*", "src/town/games/firebaseconfig.ts"],
+ "include": ["src/**/*", "firebaseconfig.ts"],
     "exclude": ["node_modules", "jest.config.ts"],
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig.json to read more about this file */

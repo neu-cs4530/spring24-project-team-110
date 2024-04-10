@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../classes/users/firebaseconfig';
+import { auth } from '../../../firebaseconfig';
 import { addUsernameIfNotPresent, userNameExists } from '../../classes/users/userNameService';
 
 type CreateAccountProps = {

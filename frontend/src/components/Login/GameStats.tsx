@@ -1,7 +1,7 @@
 import GameResult from '../../classes/users/GameResult';
 import React from 'react';
 import { Stat, StatLabel, StatNumber, StatHelpText, StatGroup } from '@chakra-ui/react';
-import { auth } from '../../classes/users/firebaseconfig';
+import { auth } from '../../../firebaseconfig';
 
 export default function GameStats({ gameHistory }: { gameHistory: GameResult[] }) {
   const connectFourWins = gameHistory.filter(

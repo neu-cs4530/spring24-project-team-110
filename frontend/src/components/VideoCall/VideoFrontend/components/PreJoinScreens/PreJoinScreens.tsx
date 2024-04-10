@@ -9,7 +9,7 @@ import useVideoContext from '../../hooks/useVideoContext/useVideoContext';
 import { Button, Heading, Text } from '@chakra-ui/react';
 import TownSelection from '../../../../Login/TownSelection';
 import { TownJoinResponse } from '../../../../../types/CoveyTownSocket';
-import { auth } from '../../../../../classes/users/firebaseconfig';
+import { auth } from '../../../../../../firebaseconfig';
 import CreateAccount from '../../../../Login/CreateAccount';
 import SignInInput from '../../../../Login/SignInInput';
 import { User, onAuthStateChanged, updateProfile } from 'firebase/auth';

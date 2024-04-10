@@ -1,7 +1,7 @@
 import React from 'react';
 import GameResult from '../../classes/users/GameResult';
 import { Table, Thead, Tbody, Tr, Th, Td, TableCaption } from '@chakra-ui/react';
-import { auth } from '../../classes/users/firebaseconfig';
+import { auth } from '../../../firebaseconfig';
 
 const getResultColor = (winner: string) => {
   if (winner === auth.currentUser?.uid) {

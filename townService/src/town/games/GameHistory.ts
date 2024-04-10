@@ -1,4 +1,3 @@
-import { format } from 'util';
 import Game from './Game';
 import GameResult from './GameResult';
 

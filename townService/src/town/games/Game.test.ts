@@ -1,6 +1,5 @@
 import TicTacToeGame from './TicTacToeGame';
 import { createPlayerForTesting } from '../../TestUtils';
-import ConnectFourGame from './ConnectFourGame';
 
 describe('Game', () => {
   it('should write to Firestore with never-seen-before players', async () => {

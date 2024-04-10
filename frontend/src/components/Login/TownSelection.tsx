@@ -24,7 +24,7 @@ import { Town } from '../../generated/client';
 import useLoginController from '../../hooks/useLoginController';
 import TownController from '../../classes/TownController';
 import useVideoContext from '../VideoCall/VideoFrontend/hooks/useVideoContext/useVideoContext';
-import { auth } from '../../classes/users/firebaseconfig';
+import { auth } from '../../../firebaseconfig';
 import { onIdTokenChanged } from 'firebase/auth';
 
 export default function TownSelection(): JSX.Element {

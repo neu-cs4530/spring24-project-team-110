@@ -1,6 +1,6 @@
 import { Button, Heading, Avatar, HStack, Text, Divider } from '@chakra-ui/react';
 import { onAuthStateChanged, User, signOut, onIdTokenChanged } from 'firebase/auth';
-import { auth } from '../../classes/users/firebaseconfig';
+import { auth } from '../../../firebaseconfig';
 import React, { useState, useEffect, useMemo } from 'react';
 import GameResult from '../../classes/users/GameResult';
 import getGameHistory from '../../classes/users/gameHistoryService';

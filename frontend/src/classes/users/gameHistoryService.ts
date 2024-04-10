@@ -1,6 +1,6 @@
 // imports the firebase config file at project root
 import { getDoc, doc, DocumentSnapshot, DocumentData } from 'firebase/firestore';
-import { db } from './firebaseconfig';
+import { db } from '../../../firebaseconfig';
 import GameResult from './GameResult';
 
 /**
